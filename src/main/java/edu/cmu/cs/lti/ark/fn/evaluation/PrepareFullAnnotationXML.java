@@ -145,7 +145,7 @@ public class PrepareFullAnnotationXML {
 	public static Document createXMLDoc(List<String> predictedFELines,
 										Range sentenceNums,
 										List<String> parses,
-										List<String> origLines) {
+										List<String> origLines) throws Exception {
 		final Document doc = XmlUtils.getNewDocument();
 		final Element corpus = doc.createElement("corpus");
 		addAttribute(doc, "ID", corpus, "100");

@@ -149,7 +149,7 @@ public class DataPoint {
 		return sentNum;
 	}
 
-	public static DependencyParse[] buildParsesForLine(String parseLine) {
+	public static DependencyParse[] buildParsesForLine(String parseLine) throws Exception {
 		StringTokenizer st = new StringTokenizer(parseLine, "\t");
 		int numWords = Integer.parseInt(st.nextToken());	// number of word tokens in the sentence
 		String[] parts = new String[6];

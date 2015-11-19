@@ -81,11 +81,11 @@ public class DataPointWithFrameElements extends DataPoint {
 		}
 	}
 
-	public DataPointWithFrameElements(String parseLine, String frameElementsLine) {
+	public DataPointWithFrameElements(String parseLine, String frameElementsLine) throws Exception {
 		this(new DependencyParses(buildParsesForLine(parseLine)), frameElementsLine, null);
 	}
 
-	public DataPointWithFrameElements(Sentence sentence, String frameElementsLine) {
+	public DataPointWithFrameElements(Sentence sentence, String frameElementsLine) throws Exception {
 		this(AllLemmaTags.makeLine(sentence.toAllLemmaTagsArray()), frameElementsLine);
 	}
 

@@ -43,8 +43,8 @@ public class SemaforInteractive {
 		output.println(">>>");
 		output.flush();
 		while (sentences.hasNext()) {
-		    SemaforSocketServer.processSentence(semafor, sentences.next(), output);
-		    output.println(">>>");
+			SemaforSocketServer.processSentence(semafor, sentences.next(), output);
+			output.println(">>>");
 		    output.flush();
 		}
 	}

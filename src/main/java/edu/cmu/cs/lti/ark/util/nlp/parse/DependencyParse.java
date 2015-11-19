@@ -85,7 +85,7 @@ public class DependencyParse extends ParseNode<DependencyParse> {
 	 *  <li>parts[5] are the lemmas (from WordNet)</li></ul>
 	 * @param logProb Pass 0 if you don't want to use it
 	 */
-	public static DependencyParse[] buildParseTrees(String[] parts, double logProb) {
+	public static DependencyParse[] buildParseTrees(String[] parts, double logProb) throws Exception {
 		String[][][] parseData = initFive(parts);
 		return process(parseData, logProb);
 	}
@@ -100,10 +100,10 @@ public class DependencyParse extends ParseNode<DependencyParse> {
 	 * @param parts See {@link #buildParseTrees(String[], double)}
 	 * @return
 	 */
-	public static String[][][] initFive(String[] parts) {
+	public static String[][][] initFive(String[] parts) throws Exception {
 		if(parts.length != 6) {
-			System.err.println("Problem. Size of input array should be 5.");
-			System.exit(0);
+			throw new Exception("Problem. Size of input array should be 5.");
+//			System.exit(0);
 		}
 		StringTokenizer st;
 		st = new StringTokenizer(parts[0],"\t");
@@ -117,8 +117,8 @@ public class DependencyParse extends ParseNode<DependencyParse> {
 			for (int s=0; s<series.length; s++) {
 				st = new StringTokenizer(series[s],"\t");
 				if(st.countTokens()!=count) {
-					System.err.println("Problem. Count of line "+p+" (" + st.countTokens() + ") not equal to zeroth line (" + count + ").");
-					System.exit(0);
+					throw new Exception("Problem. Count of line "+p+" (" + st.countTokens() + ") not equal to zeroth line (" + count + ").");
+//					System.exit(0);
 				}
 
 				// Iterate through words and update with this annotation series

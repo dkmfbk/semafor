@@ -83,7 +83,7 @@ public class DataPrep {
 		}
 	}
 
-	public DataPrep(List<String> tagLines, List<String> feLines) throws IOException {
+	public DataPrep(List<String> tagLines, List<String> feLines) throws Exception {
 		new FileOutputStream(new File(FEFileName.spanfilename), false).close(); // clobber spans file. this is gross
 		this.feLines = feLines;
 		this.tagLines = tagLines;
@@ -135,7 +135,7 @@ public class DataPrep {
 	}
 
 	/** loads data needed for feature extraction */
-	private List<List<SpanAndParseIdx>> load(List<String> tagLines, List<String> frameElementLines) {
+	private List<List<SpanAndParseIdx>> load(List<String> tagLines, List<String> frameElementLines) throws Exception {
 		final ArrayList<List<SpanAndParseIdx>> candidateLines = Lists.newArrayList();
 		for (String feline : frameElementLines) {
 			final int sentNum = parseInt(feline.split("\t")[7]);
@@ -198,7 +198,7 @@ public class DataPrep {
 		}
 	}
 
-	public int[][][] getNextTrainData() throws IOException {
+	public int[][][] getNextTrainData() throws Exception {
 		final String feline = feLines.get(feIndex);
 		final List<SpanAndParseIdx> candidateTokens = candidateLines.get(feIndex);
 		final int sentNum = parseInt(feline.split("\t")[7]);
@@ -210,7 +210,7 @@ public class DataPrep {
 	}
 
 	public List<int[][]> getTrainData(String feline, List<SpanAndParseIdx> candidateTokens, Sentence sentence)
-			throws IOException {
+			throws Exception {
 		final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(sentence, feline);
 		final String frame = dataPoint.getFrameName();
 		final String[] frameElements = FEDict.getInstance().lookupFrameElements(frame);

@@ -37,7 +37,7 @@ import static edu.cmu.cs.lti.ark.fn.utils.BitOps.writeInt;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
 public class CreateAlphabet {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		FEFileName.feFilename = args[0];
 		FEFileName.tagFilename =  args[1];
 		FEFileName.eventFilename =  args[2];
@@ -67,7 +67,7 @@ public class CreateAlphabet {
 
 	public static void run(boolean doGenerateAlphabet,
 						   List<String> tagLines,
-						   List<String> frameElementLines) throws IOException {
+						   List<String> frameElementLines) throws Exception {
 		DataPrep.genAlpha = doGenerateAlphabet;
 		if(doGenerateAlphabet){
 			DataPrep.featureIndex = Maps.newHashMap();
@@ -113,7 +113,7 @@ public class CreateAlphabet {
 	}
 
 	public static List<int[][][]> getDataPoints(List<String> tagLines, List<String> frameElementLines)
-			throws IOException {
+			throws Exception {
 		final DataPrep dataPrep = new DataPrep(tagLines, frameElementLines);
 		final List<int[][][]> dataPoints = Lists.newArrayList();
 		while(dataPrep.hasNext()){

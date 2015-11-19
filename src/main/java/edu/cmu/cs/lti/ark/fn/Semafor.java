@@ -220,7 +220,7 @@ public class Semafor {
 		System.err.println("Done.");
 	}
 
-	public SemaforParseResult parseSentence(Sentence unLemmatizedSentence) throws IOException {
+	public SemaforParseResult parseSentence(Sentence unLemmatizedSentence) throws Exception {
 		// look up lemmas
 		final Sentence sentence = addLemmas(unLemmatizedSentence);
 		// find targets
@@ -245,7 +245,7 @@ public class Semafor {
 	}
 
 	public SemaforParseResult predictArguments(Sentence sentence, List<Pair<List<Integer>, String>> idResults)
-			throws IOException {
+			throws Exception {
 		final List<String> idResultLines = getArgumentIdInput(sentence, idResults);
 		final List<String> argResult = predictArgumentLines(sentence, idResultLines, 1);
 		return getSemaforParseResult(sentence, argResult);
@@ -272,7 +272,7 @@ public class Semafor {
 		return idResultLines;
 	}
 
-	public List<String> predictArgumentLines(Sentence sentence, List<String> idResult, int kBest) throws IOException {
+	public List<String> predictArgumentLines(Sentence sentence, List<String> idResult, int kBest) throws Exception {
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResult) {

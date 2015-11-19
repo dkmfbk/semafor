@@ -39,26 +39,35 @@ public class SemaforSocketServer {
 		final ServerSocket serverSocket = new ServerSocket(port);
 		System.err.println("Listening on port: " + serverSocket.getLocalPort());
 		while (true) {
+			SentenceCodec.SentenceIterator sentences = null;
+			PrintWriter output = null;
+			Socket clientSocket = null;
+
 			try {
-				final Socket clientSocket = serverSocket.accept();
-				final SentenceCodec.SentenceIterator sentences =
-						ConllCodec.readInput(new InputStreamReader(clientSocket.getInputStream(), Charsets.UTF_8));
-				final PrintWriter output =
-						new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), Charsets.UTF_8));
+				clientSocket = serverSocket.accept();
+				sentences = ConllCodec.readInput(new InputStreamReader(clientSocket.getInputStream(), Charsets.UTF_8));
+				output = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), Charsets.UTF_8));
 				while (sentences.hasNext()) {
-					processSentence(semafor, sentences.next(), output);
+					boolean ok = processSentence(semafor, sentences.next(), output);
+					if (!ok) {
+						break;
+					}
 				}
-				closeQuietly(sentences);
-				closeQuietly(output);
 			} catch (Exception e) {
 				e.printStackTrace(System.err);
+			}
+			finally {
+				closeQuietly(sentences);
+				closeQuietly(output);
+				closeQuietly(clientSocket);
 			}
 		}
 	}
 
-	public static void processSentence(Semafor semafor, Sentence sentence, PrintWriter output)
+	public static boolean processSentence(Semafor semafor, Sentence sentence, PrintWriter output)
 		throws IOException {
 		final long start = System.currentTimeMillis();
+		boolean ret = true;
 		try {
 			output.println(semafor.parseSentence(sentence).toJson());
 		} catch (Exception e) {
@@ -66,9 +75,12 @@ public class SemaforSocketServer {
 			e.printStackTrace(System.err);
 			String message = jsonMapper.writeValueAsString(e.toString());
 			output.println("{\"error\": "+message+"}");
+			ret = false;
 		}
 		output.flush();
 		final long end = System.currentTimeMillis();
 		System.err.printf("parsed sentence with %d tokens in %d millis.%n", sentence.size(), end - start);
+
+		return ret;
     }
 }

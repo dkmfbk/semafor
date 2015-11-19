@@ -21,7 +21,7 @@ public class DataPrepTest {
 	private Sentence sentence = MaltCodec.decode(maltLine);
 	final String frameElementsLine = "0\t1.0\t1\tTemporal_collocation\tno.r\t2_3\tno longer\t0\n";
 
-	private List<SpanAndParseIdx> findSpans() {
+	private List<SpanAndParseIdx> findSpans() throws Exception {
 		final DataPointWithFrameElements dataPointWithElements =
 				new DataPointWithFrameElements(sentence, frameElementsLine);
 		final int kBestParses = 1;
@@ -29,13 +29,13 @@ public class DataPrepTest {
 	}
 
 	@Test
-	public void testFindSpansIncludesNullSpan() {
+	public void testFindSpansIncludesNullSpan() throws Exception {
 		final List<SpanAndParseIdx> spanList = findSpans();
 		Assert.assertTrue(spanList.contains(SpanAndParseIdx.EMPTY_SPAN_AND_PARSE_IDX));
 	}
 
 	@Test
-	public void testFindSpansIncludesSingletons() {
+	public void testFindSpansIncludesSingletons() throws Exception {
 		final List<SpanAndParseIdx> spanList = findSpans();
 		for(int i : xrange(sentence.size())) {
 			Assert.assertTrue(spanList.contains(new SpanAndParseIdx(createSpanRange(i, i), 0)));
@@ -43,7 +43,7 @@ public class DataPrepTest {
 	}
 
 	@Test
-	public void testFindSpansIncludesConstituents() {
+	public void testFindSpansIncludesConstituents() throws Exception {
 		final List<SpanAndParseIdx> spanList = findSpans();
 		List<SpanAndParseIdx> expectedSpans = ImmutableList.of(
 				new SpanAndParseIdx(createSpanRange(0, 1), 0), // my -> kitchen
