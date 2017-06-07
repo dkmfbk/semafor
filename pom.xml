@@ -159,10 +159,12 @@
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
-                                    <includes>
-                                        <include>com/google/common/**</include>
-                                        <include>edu/cmu/**</include>
-                                    </includes>
+                                    <!--<includes>-->
+                                        <!--<include>com/google/common/**</include>-->
+                                        <!--<include>edu/cmu/**</include>-->
+                                        <!--<include>gnu/trove/**</include>-->
+                                        <!--<include>uk/**</include>-->
+                                    <!--</includes>-->
                                 </filter>
                             </filters>
                             <transformers>

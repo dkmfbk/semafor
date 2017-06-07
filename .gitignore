@@ -26,3 +26,8 @@ training/data/log
 # models and experiments
 models/
 experiments/
+
+training
+example*
+test*
+
